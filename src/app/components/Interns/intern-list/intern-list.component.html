@@ -1,0 +1,30 @@
+<div class="container my-5">
+    <h1 class="mb-3">Interns</h1>
+
+    <table class="table" *ngIf="interns and interns.length>0">
+      <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Stipend</th>
+            <th>Department</th>
+        </tr>
+      </thead>
+
+      <tbody >
+        <tr *ngFor="let intern of interns">
+            <td>{{intern.id}}</td>
+            <td>{{intern.name}}</td>
+            <td>{{intern.email}}</td>
+            <td>{{intern.phone}}</td>
+            <td>{{intern.stipend}}</td>
+            <td>{{intern.department}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="!interns || interns.length <= 0">No Interns Found</p>
+
+</div>
