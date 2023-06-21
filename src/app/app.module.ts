@@ -8,6 +8,8 @@ import { InternListComponent } from './components/Interns/intern-list/intern-lis
 import { TableModule } from 'primeng/table';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
