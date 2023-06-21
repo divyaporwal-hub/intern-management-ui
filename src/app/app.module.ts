@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { InternListComponent } from './components/Interns/intern-list/intern-list.component';
+import { TableModule } from 'primeng/table';
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -14,8 +16,11 @@ import { InternListComponent } from './components/Interns/intern-list/intern-lis
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TableModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA,
+            NO_ERRORS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent]
 })

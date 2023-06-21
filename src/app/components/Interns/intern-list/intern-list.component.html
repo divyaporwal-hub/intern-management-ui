@@ -1,4 +1,4 @@
-<div class="container my-5">
+<!-- <div class="container my-5">
     <h1 class="mb-3">Interns</h1>
 
     <table class="table" *ngIf="interns and interns.length>0">
@@ -27,4 +27,221 @@
 
     <p *ngIf="!interns || interns.length <= 0">No Interns Found</p>
 
-</div>
+</div> -->
+
+<!-- 
+<p-table [value]="interns" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>internID</th>
+          <th>internName</th>
+          <th>Email ID</th>
+          <th>Phone no.</th>
+          <th>Stipend</th>
+          <th>Department</th>
+          <th>Profile</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-intern>
+      <tr>
+        <td>{{intern.id}}</td>
+        <td>{{intern.name}}</td>
+        <td>{{intern.email}}</td>
+        <td>{{intern.phone}}</td>
+        <td>{{intern.stipend}}</td>
+        <td>{{intern.department}}</td>
+      </tr>
+  </ng-template>
+</p-table> -->
+
+
+<p-table [value]="interns" [tableStyle]="{'min-width': '60rem'}" [paginator]="true"
+[rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
+  <ng-template pTemplate="caption"> Header </ng-template> 
+  <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+          <h1>Interns</h1>
+          <p-button icon="pi pi-refresh"></p-button>
+      </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+      <tr>
+          
+        <th>ID</th>
+        <th>Name</th>
+        <th>Profile</th>
+        <th>Email ID</th>
+        <th>Phone no.</th>
+        <th>Stipend</th>
+        <th>Department</th>
+       
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-intern>
+      <tr>
+          <td>{{intern.id}}</td>
+          <td>{{intern.name}}</td>
+          <td><img [src]="intern.image" [alt]="intern.name" width="100" class="shadow-4" /></td>
+          <td>{{intern.email}}</td>
+          <td>{{intern.phone}}</td>
+          <td>
+            <div [ngClass]="{'noStipend': intern.stipend === 0, 'lowStipend': (intern.stipend > 0 && intern.stipend < 100),'highStipend': intern.stipend > 100}">
+                {{intern.stipend}}
+            </div>
+        </td>
+          <td>{{intern.department}}</td>
+          <!-- <td><p-rating [ngModel]="intern.review" [readonly]="true" [cancel]="false">{{intern.review}}</p-rating></td>  -->
+           <!-- <td><p-tag [value]="intern.review" [severity]="getSeverity(intern.)"></p-tag></td>  -->
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+          <h4>In total there are {{interns ? interns.length : 0 }} interns.</h4>
+      </div>
+  </ng-template>
+</p-table> 
+
+
+
+
+
+
+
+
+<!-- Filter -->
+
+<!-- <p-table
+    #dt1
+    [value]="interns"
+    dataKey="id"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [loading]="loading"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+>
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="min-width:15rem">
+                <div class="flex align-items-center">
+                    Name
+                    <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width:15rem">
+                <div class="flex align-items-center">
+                    Email ID
+                    <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width:15rem">
+                <div class="flex align-items-center">
+                    Department
+                    <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                        <ng-template pTemplate="header">
+                            <div class="px-3 pt-3 pb-0">
+                                <span class="font-bold">Agent Picker</span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                                <ng-template let-option pTemplate="item">
+                                    <div class="inline-block vertical-align-middle">
+                                        <img [alt]="option.label" src="{{ intern.image }}" width="24" class="vertical-align-middle" />
+                                        <span class="ml-1 mt-1">{{ intern.name }}</span>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+                        </ng-template>
+                    </p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width:10rem">
+                <div class="flex align-items-center">
+                    Phone no.
+                    <p-columnFilter type="number" field="phone" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="min-width:10rem">
+                <div class="flex align-items-center">
+                    Status
+                    <p-columnFilter field="status" matchMode="equals" display="menu">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
+                                <ng-template let-option pTemplate="item">
+                                    <p-tag [value]="intern.department" [severity]="getSeverity(intern.department)"></p-tag>
+                                </ng-template>
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+                </div>
+            </th> -->
+            <!-- <th style="min-width:10rem">
+                <div class="flex align-items-center">
+                    Activity
+                    <p-columnFilter field="activity" matchMode="between" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                        <ng-template pTemplate="filter" let-filter="filterCallback">
+                            <p-slider [ngModel]="activityValues" [range]="true" (onSlideEnd)="filter($event.values)" styleClass="m-3"></p-slider>
+                            <div class="flex align-items-center px-2">
+                                <span>{{ activityValues[0] }}</span>
+                                <span>{{ activityValues[1] }}</span>
+                            </div>
+                        </ng-template>
+                    </p-columnFilter>
+                </div>
+            </th> -->
+            <!-- <th style="width: 3rem">
+                <div class="flex align-items-center">
+                    Verified
+                    <p-columnFilter type="boolean" field="verified" display="menu"></p-columnFilter>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+        <tr>
+            <td>
+                {{ customer.name }}
+            </td>
+            <td>
+                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" style="width: 20px" />
+                <span class="ml-1 vertical-align-middle">{{ customer.country.name }}</span>
+            </td>
+            <td>
+                <img [alt]="customer.representative.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
+                <span class="ml-1 vertical-align-middle">{{ customer.representative.name }}</span>
+            </td>
+            <td>
+                {{ customer.date | date: 'MM/dd/yyyy' }}
+            </td>
+            <td>
+                {{ customer.balance | currency: 'USD':'symbol' }}
+            </td>
+            <td>
+                <p-tag [value]="customer.status" [severity]="getSeverity(customer.status)"></p-tag>
+            </td>
+            <td>
+                <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
+            </td>
+            <td class="text-center">
+                <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': customer.verified, 'text-red-500 pi-times-circle': !customer.verified }"></i>
+            </td>
+        </tr> 
+    </ng-template> 
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="7">No Interns found.</td>
+        </tr>
+    </ng-template>
+</p-table> -->

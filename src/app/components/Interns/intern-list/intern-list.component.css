@@ -1,0 +1,19 @@
+h1{
+    align-items: center;
+    /* padding-right: 50 px; */
+    padding-left: 550px;
+    /* padding-bottom: 1000 px; */
+    padding-top: 20px;
+    border: 10pt;
+    border-color: black;
+
+}
+.noStipend{
+    color: red;
+}
+.lowStipend{
+    color:orangered;
+}
+.highStiepnd{
+    color: green;
+}

@@ -4,5 +4,7 @@ export interface intern{
     email:string,
     phone:number,
     stipend:number,
-    department:string;
+    department:string,
+    reviews:number,
+    image: string;
 }
